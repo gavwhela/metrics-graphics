@@ -63,12 +63,12 @@ MG.data_graphic = function(args) {
     ygroup_accessor: null,
     xgroup_accessor:null,
     y_padding_percentage: 0.05,                 // for categorical scales
-    y_outer_padding_percentage: .1,             // for categorical scales
-    ygroup_padding_percentage:.25,              // for categorical scales
+    y_outer_padding_percentage: 0.1,            // for categorical scales
+    ygroup_padding_percentage: 0.25,            // for categorical scales
     ygroup_outer_padding_percentage: 0,         // for categorical scales
     x_padding_percentage: 0.05,                 // for categorical scales
-    x_outer_padding_percentage: .1,             // for categorical scales
-    xgroup_padding_percentage:.25,              // for categorical scales
+    x_outer_padding_percentage: 0.1,            // for categorical scales
+    xgroup_padding_percentage: 0.25,            // for categorical scales
     xgroup_outer_padding_percentage: 0,         // for categorical scales
     y_categorical_show_guides: false,
     x_categorical_show_guide: false,

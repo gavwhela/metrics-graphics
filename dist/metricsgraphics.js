@@ -60,6 +60,12 @@ function mg_get_rollover_time_format(args) {
     case 'four-days':
       fmt = MG.time_format(args.utc_time, '%b %e, %Y  %I:%M%p');
       break;
+    case 'two-weeks':
+      fmt = MG.time_format(args.utc_time, '%b %e, %Y  %I:%M%p');
+      break;
+    case 'many-days':
+      fmt = MG.time_format(args.utc_time, '%b %e, %Y  %I%p');
+      break;
     default:
       fmt = MG.time_format(args.utc_time, '%b %e, %Y');
   }
@@ -733,12 +739,12 @@ MG.data_graphic = function(args) {
     ygroup_accessor: null,
     xgroup_accessor:null,
     y_padding_percentage: 0.05,                 // for categorical scales
-    y_outer_padding_percentage: .1,             // for categorical scales
-    ygroup_padding_percentage:.25,              // for categorical scales
+    y_outer_padding_percentage: 0.1,            // for categorical scales
+    ygroup_padding_percentage: 0.25,            // for categorical scales
     ygroup_outer_padding_percentage: 0,         // for categorical scales
     x_padding_percentage: 0.05,                 // for categorical scales
-    x_outer_padding_percentage: .1,             // for categorical scales
-    xgroup_padding_percentage:.25,              // for categorical scales
+    x_outer_padding_percentage: 0.1,            // for categorical scales
+    xgroup_padding_percentage: 0.25,            // for categorical scales
     xgroup_outer_padding_percentage: 0,         // for categorical scales
     y_categorical_show_guides: false,
     x_categorical_show_guide: false,
@@ -1924,8 +1930,8 @@ function rugPlacement (args, axisArgs) {
     coordinates.y2 = args.scalefns[ns + 'f'];
   }
   if (position === 'right') {
-    coordinates.x1 = mg_get_right(args) - 1,
-    coordinates.x2 = mg_get_right(args) - args.rug_buffer_size,
+    coordinates.x1 = mg_get_right(args) - 1;
+    coordinates.x2 = mg_get_right(args) - args.rug_buffer_size;
     coordinates.y1 = args.scalefns[ns + 'f'];
     coordinates.y2 = args.scalefns[ns + 'f'];
   }
@@ -2720,7 +2726,7 @@ function mg_bar_add_zero_line (args) {
       .attr('y1', r[0] + mg_get_plot_top(args))
       .attr('y2', r[r.length - 1] + g)
       .attr('stroke', 'black')
-      .attr('opacity', .2);
+      .attr('opacity', 0.2);
   }
 }
 
@@ -2762,7 +2768,7 @@ function set_min_max_y (args) {
   }
 
   if (!args.min_y && args.min_y_from_data) {
-    var buff = (my.max - my.min) * .01;
+    var buff = (my.max - my.min) * 0.01;
     my.min = extents[0] - buff;
     my.max = extents[1] + buff;
   }
@@ -3234,6 +3240,8 @@ function mg_get_time_frame(diff) {
     time_frame = 'less-than-a-day';
   } else if (mg_four_days(diff)) {
     time_frame = 'four-days';
+  } else if (mg_two_weeks(diff)) {
+    time_frame = 'two-weeks';
   } else if (mg_many_days(diff)) { // a handful of months?
     time_frame = 'many-days';
   } else if (mg_many_months(diff)) {
@@ -3262,6 +3270,10 @@ function mg_four_days(diff) {
   return diff / (60 * 60) <= 24 * 4;
 }
 
+function mg_two_weeks(diff) {
+  return diff / (60 * 60) <= 24 * 14;
+}
+
 function mg_many_days(diff) {
   return diff / (60 * 60 * 24) <= 93;
 }
@@ -3284,6 +3296,8 @@ function mg_get_time_format(utc, diff) {
     main_time_format = MG.time_format(utc, '%H:%M');
   } else if (mg_four_days(diff)) {
     main_time_format = MG.time_format(utc, '%H:%M');
+  } else if (mg_two_weeks(diff)) {
+    main_time_format = MG.time_format(utc, '%A');
   } else if (mg_many_days(diff)) {
     main_time_format = MG.time_format(utc, '%b %d');
   } else if (mg_many_months(diff)) {
@@ -3469,6 +3483,10 @@ function mg_get_yformat_and_secondary_time_function(args) {
       break;
     case 'four-days':
       tf.secondary = d3.timeDays;
+      tf.yformat = MG.time_format(args.utc_time, '%b %d');
+      break;
+    case 'two-weeks':
+      tf.secondary = d3.timeWeeks;
       tf.yformat = MG.time_format(args.utc_time, '%b %d');
       break;
     case 'many-days':
@@ -6045,13 +6063,13 @@ function mg_color_point_mouseover(args, elem, d) {
   }
 
   var defaults = {
-    y_padding_percentage: 0.05, // for categorical scales
-    y_outer_padding_percentage: .2, // for categorical scales
-    ygroup_padding_percentage: 0, // for categorical scales
+    y_padding_percentage: 0.05,         // for categorical scales
+    y_outer_padding_percentage: 0.2,    // for categorical scales
+    ygroup_padding_percentage: 0,       // for categorical scales
     ygroup_outer_padding_percentage: 0, // for categorical scales
-    x_padding_percentage: 0.05, // for categorical scales
-    x_outer_padding_percentage: .2, // for categorical scales
-    xgroup_padding_percentage: 0, // for categorical scales
+    x_padding_percentage: 0.05,         // for categorical scales
+    x_outer_padding_percentage: 0.2,    // for categorical scales
+    xgroup_padding_percentage: 0,       // for categorical scales
     xgroup_outer_padding_percentage: 0, // for categorical scales
     y_categorical_show_guides: true,
     x_categorical_show_guides: true,
@@ -6897,13 +6915,13 @@ function mg_color_point_mouseover(args, elem, d) {
   }
 
   var defaults = {
-    y_padding_percentage: 0.05, // for categorical scales
-    y_outer_padding_percentage: .2, // for categorical scales
-    ygroup_padding_percentage: 0, // for categorical scales
+    y_padding_percentage: 0.05,         // for categorical scales
+    y_outer_padding_percentage: 0.2,    // for categorical scales
+    ygroup_padding_percentage: 0,       // for categorical scales
     ygroup_outer_padding_percentage: 0, // for categorical scales
-    x_padding_percentage: 0.05, // for categorical scales
-    x_outer_padding_percentage: .2, // for categorical scales
-    xgroup_padding_percentage: 0, // for categorical scales
+    x_padding_percentage: 0.05,         // for categorical scales
+    x_outer_padding_percentage: 0.2,    // for categorical scales
+    xgroup_padding_percentage: 0,       // for categorical scales
     xgroup_outer_padding_percentage: 0, // for categorical scales
     buffer: 16,
     y_accessor: 'factor',
@@ -7499,7 +7517,7 @@ function process_line(args) {
 
       time_frame = mg_get_time_frame((upto - from) / 1000);
 
-      if (['four-days', 'many-days', 'many-months', 'years', 'default'].indexOf(time_frame) !== -1 && args.missing_is_hidden_accessor === null) {
+      if (['four-days', 'two-weeks', 'many-days', 'many-months', 'years', 'default'].indexOf(time_frame) !== -1 && args.missing_is_hidden_accessor === null) {
         for (var d = new Date(from); d <= upto; d.setDate(d.getDate() + 1)) {
           var o = {};
           d.setHours(0, 0, 0, 0);

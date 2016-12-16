@@ -236,6 +236,8 @@ function mg_get_time_frame(diff) {
     time_frame = 'less-than-a-day';
   } else if (mg_four_days(diff)) {
     time_frame = 'four-days';
+  } else if (mg_two_weeks(diff)) {
+    time_frame = 'two-weeks';
   } else if (mg_many_days(diff)) { // a handful of months?
     time_frame = 'many-days';
   } else if (mg_many_months(diff)) {
@@ -264,6 +266,10 @@ function mg_four_days(diff) {
   return diff / (60 * 60) <= 24 * 4;
 }
 
+function mg_two_weeks(diff) {
+  return diff / (60 * 60) <= 24 * 14;
+}
+
 function mg_many_days(diff) {
   return diff / (60 * 60 * 24) <= 93;
 }
@@ -286,6 +292,8 @@ function mg_get_time_format(utc, diff) {
     main_time_format = MG.time_format(utc, '%H:%M');
   } else if (mg_four_days(diff)) {
     main_time_format = MG.time_format(utc, '%H:%M');
+  } else if (mg_two_weeks(diff)) {
+    main_time_format = MG.time_format(utc, '%A');
   } else if (mg_many_days(diff)) {
     main_time_format = MG.time_format(utc, '%b %d');
   } else if (mg_many_months(diff)) {
@@ -471,6 +479,10 @@ function mg_get_yformat_and_secondary_time_function(args) {
       break;
     case 'four-days':
       tf.secondary = d3.timeDays;
+      tf.yformat = MG.time_format(args.utc_time, '%b %d');
+      break;
+    case 'two-weeks':
+      tf.secondary = d3.timeWeeks;
       tf.yformat = MG.time_format(args.utc_time, '%b %d');
       break;
     case 'many-days':

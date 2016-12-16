@@ -54,8 +54,8 @@ function rugPlacement (args, axisArgs) {
     coordinates.y2 = args.scalefns[ns + 'f'];
   }
   if (position === 'right') {
-    coordinates.x1 = mg_get_right(args) - 1,
-    coordinates.x2 = mg_get_right(args) - args.rug_buffer_size,
+    coordinates.x1 = mg_get_right(args) - 1;
+    coordinates.x2 = mg_get_right(args) - args.rug_buffer_size;
     coordinates.y1 = args.scalefns[ns + 'f'];
     coordinates.y2 = args.scalefns[ns + 'f'];
   }
@@ -850,7 +850,7 @@ function mg_bar_add_zero_line (args) {
       .attr('y1', r[0] + mg_get_plot_top(args))
       .attr('y2', r[r.length - 1] + g)
       .attr('stroke', 'black')
-      .attr('opacity', .2);
+      .attr('opacity', 0.2);
   }
 }
 
@@ -892,7 +892,7 @@ function set_min_max_y (args) {
   }
 
   if (!args.min_y && args.min_y_from_data) {
-    var buff = (my.max - my.min) * .01;
+    var buff = (my.max - my.min) * 0.01;
     my.min = extents[0] - buff;
     my.max = extents[1] + buff;
   }

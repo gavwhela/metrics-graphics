@@ -49,6 +49,12 @@ function mg_get_rollover_time_format(args) {
     case 'four-days':
       fmt = MG.time_format(args.utc_time, '%b %e, %Y  %I:%M%p');
       break;
+    case 'two-weeks':
+      fmt = MG.time_format(args.utc_time, '%b %e, %Y  %I:%M%p');
+      break;
+    case 'many-days':
+      fmt = MG.time_format(args.utc_time, '%b %e, %Y  %I%p');
+      break;
     default:
       fmt = MG.time_format(args.utc_time, '%b %e, %Y');
   }

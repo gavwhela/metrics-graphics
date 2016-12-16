@@ -8,5 +8,6 @@
   "laxbreak": true,
   "validthis": true,
   "loopfunc": true,
-  "sub": true
+  "sub": true,
+  "asi" : true
 }
